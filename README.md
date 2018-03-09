@@ -1,6 +1,6 @@
 This repository contains samples that show how to use the Scandit Barcode Scanner SDK for the Web (Beta).
 
-# Scandit Barcode Scanner SDK for the Web (Beta)
+# Scandit Barcode Scanner SDK for the Web
 
 Enterprise barcode scanning performance in your browser via JavaScript and WebAssembly.
 

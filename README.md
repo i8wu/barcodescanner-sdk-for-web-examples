@@ -1,4 +1,4 @@
-This repository contains samples that show how to use the Scandit Barcode Scanner SDK for the Web (Beta).
+This repository contains samples that show how to use the Scandit Barcode Scanner SDK for the Web.
 
 # Scandit Barcode Scanner SDK for the Web
 

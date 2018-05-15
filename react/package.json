@@ -1,0 +1,38 @@
+{
+  "name": "scandit-sdk-react",
+  "version": "1.0.0",
+  "files": [
+    "css",
+    "es",
+    "lib",
+    "umd"
+  ],
+  "scripts": {
+    "build": "nwb build-react-component",
+    "clean": "nwb clean-module && nwb clean-demo",
+    "start": "nwb serve-react-demo"
+  },
+  "peerDependencies": {
+    "react": "16.x"
+  },
+  "devDependencies": {
+    "nwb": "^0.21.5",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
+  },
+  "dependencies": {
+    "scandit-sdk": "^2.4.1"
+  },
+  "keywords": [
+    "scandit",
+    "barcode",
+    "scan",
+    "scanning",
+    "code",
+    "webassembly",
+    "sdk",
+    "react",
+    "component",
+    "react-component"
+  ]
+}

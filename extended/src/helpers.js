@@ -35,6 +35,8 @@ export const ViewFunctions = {
         app.continuousScanning = isContinuous;
 
         app.applySettingsToScanner();
+        app.picker.accessCamera();
+        app.picker.setVisible(true);
         if (app.continuousScanning) {
             ViewFunctions.setScanningUI(false);
             app.picker.resumeScanning();

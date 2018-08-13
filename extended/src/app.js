@@ -27,6 +27,8 @@ export class App {
             ScanditSDK.Barcode.Symbology.QR,
         ]);
 
+        this.scanSettings.getSymbologySettings(ScanditSDK.Barcode.Symbology.CODE128).setActiveSymbolCountsRange(1, 20);
+
         this.createPickerOptions = {
             visible: true,
             scanningPaused: true,

@@ -1,5 +1,6 @@
-import * as ScanditSDK from "scandit-sdk";
-import { ViewFunctions } from "./helpers";
+import * as ScanditSDK from 'scandit-sdk';
+
+import { ViewFunctions } from './helpers';
 
 /*
  * Functionality related to elements in the view

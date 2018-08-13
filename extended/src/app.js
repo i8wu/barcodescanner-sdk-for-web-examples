@@ -1,7 +1,8 @@
-import * as ScanditSDK from "scandit-sdk";
-import { ViewFunctions } from "./helpers";
-import { Elements } from "./elements";
-import { Config } from "./config";
+import * as ScanditSDK from 'scandit-sdk';
+
+import { Config } from './config';
+import { Elements } from './elements';
+import { ViewFunctions } from './helpers';
 
 /*
  * Core functionality, including barcode scanning

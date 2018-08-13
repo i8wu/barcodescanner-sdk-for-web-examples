@@ -1,6 +1,6 @@
-import { ViewFunctions } from "./helpers";
-import { Elements } from "./elements";
-import { App } from "./app";
+import { App } from './app';
+import { Elements } from './elements';
+import { ViewFunctions } from './helpers';
 
 export let app;
 

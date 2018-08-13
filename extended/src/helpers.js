@@ -1,6 +1,7 @@
-import * as ScanditSDK from "scandit-sdk";
-import { Elements } from "./elements";
-import { app } from "./index";
+import * as ScanditSDK from 'scandit-sdk';
+
+import { app } from '.';
+import { Elements } from './elements';
 
 /*
  * Functionality related to the UI of the app
@@ -35,6 +36,7 @@ export const ViewFunctions = {
         app.continuousScanning = isContinuous;
 
         app.applySettingsToScanner();
+        app.picker.accessCamera();
         if (app.continuousScanning) {
             ViewFunctions.setScanningUI(false);
             app.picker.resumeScanning();

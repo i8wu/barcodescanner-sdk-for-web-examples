@@ -1,7 +1,8 @@
-import * as ScanditSDK from "scandit-sdk";
-import { ViewFunctions } from "./helpers";
-import { Elements } from "./elements";
-import { Config } from "./config";
+import * as ScanditSDK from 'scandit-sdk';
+
+import { Config } from './config';
+import { Elements } from './elements';
+import { ViewFunctions } from './helpers';
 
 /*
  * Core functionality, including barcode scanning
@@ -26,9 +27,12 @@ export class App {
             ScanditSDK.Barcode.Symbology.QR,
         ]);
 
+        this.scanSettings.getSymbologySettings(ScanditSDK.Barcode.Symbology.CODE128).setActiveSymbolCountsRange(1, 20);
+
         this.createPickerOptions = {
             visible: true,
             scanningPaused: true,
+            accessCamera: false,
             scanSettings: this.scanSettings,
         };
     }
@@ -118,7 +122,7 @@ export class App {
         Elements.maxCodesPerFrame.value = this.scanSettings.getMaxNumberOfCodesPerFrame();
         Elements.mirroringEnabled.checked = this.picker.isMirrorImageEnabled();
 
-        Elements.camera.setActive(this.picker.getActiveCamera().cameraType);
+        Elements.camera.setActive(this.picker.getActiveCamera() ? this.picker.getActiveCamera().cameraType : undefined);
     }
 
     /**

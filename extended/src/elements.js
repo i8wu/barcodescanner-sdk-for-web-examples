@@ -110,9 +110,9 @@ export const Elements = {
         Elements.guiStyle.values.forEach(guiStyle => Elements.addGuiStyle(guiStyle));
 
         Elements.guiStyles.active = () =>
-            ScanditSDK.BarcodePicker.UIStyle[
-            Elements.guiStyle.all.filter(el => el.checked())[0].guiStyle()
-            ]
+            Elements.guiStyle.all.filter(el => el.checked())[0] ? ScanditSDK.BarcodePicker.UIStyle[
+                Elements.guiStyle.all.filter(el => el.checked())[0].guiStyle()
+            ] : undefined
     },
 
     setupRestrictedArea: () => {

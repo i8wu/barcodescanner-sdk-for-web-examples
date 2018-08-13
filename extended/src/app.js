@@ -118,7 +118,7 @@ export class App {
         Elements.maxCodesPerFrame.value = this.scanSettings.getMaxNumberOfCodesPerFrame();
         Elements.mirroringEnabled.checked = this.picker.isMirrorImageEnabled();
 
-        Elements.camera.setActive(this.picker.getActiveCamera().cameraType);
+        Elements.camera.setActive(this.picker.getActiveCamera() ? this.picker.getActiveCamera().cameraType : undefined);
     }
 
     /**

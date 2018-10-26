@@ -1,4 +1,4 @@
 export const Config = {
-    licenseKey: "-- ENTER YOUR SCANDIT LICENSE KEY HERE --",
+    licenseKey: "YOUR_LICENSE_KEY_IS_NEEDED_HERE",
     engineLocation: "https://unpkg.com/scandit-sdk/build", // could also be e.g. "build"
 };

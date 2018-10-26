@@ -41,7 +41,7 @@ export class AppComponent implements AfterViewInit {
 
   private initializeScanner(): void {
     // Configure the library and activate it with a license key
-    const licenseKey = "-- ENTER YOUR SCANDIT LICENSE KEY HERE --";
+    const licenseKey = "YOUR_LICENSE_KEY_IS_NEEDED_HERE";
 
     ScanditSDK.configure(licenseKey, { engineLocation: "assets/" });
 

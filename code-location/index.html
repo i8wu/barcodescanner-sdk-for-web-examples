@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Scandit Example Page</title>
+    <!-- Add the library, as explained on http://docs.scandit.com/stable/web/index.html -->
+    <script src="https://unpkg.com/scandit-sdk"></script>
+    <style>
+      .scanner {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        max-width: 1280px;
+        max-height: 80%;
+      }
+
+      /* Position the code location canvas directly over the camera video */
+      .code-location-canvas {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .mirrored {
+        transform: scale(-1, 1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="barcode-picker" class="scanner"></div>
+
+    <script>
+      var videoFit = ScanditSDK.BarcodePicker.ObjectFit.CONTAIN;
+
+      // Create the code location canvas element
+      var codeLocationCanvasElement = document.createElement("canvas");
+      codeLocationCanvasElement.classList.add("code-location-canvas");
+
+      // Set the code location canvas to fit in its parent element in the same way as the camera video inside the barcode picker
+      codeLocationCanvasElement.style.objectFit = codeLocationCanvasElement.dataset.objectFit = videoFit; // Second value used by "objectFitPolyfill" library
+
+      var codeLocationCanvasContext = codeLocationCanvasElement.getContext("2d");
+
+      function drawCodeLocation(location) {
+        codeLocationCanvasContext.beginPath();
+        codeLocationCanvasContext.moveTo(location.topLeft.x, location.topLeft.y);
+        codeLocationCanvasContext.lineTo(location.topRight.x, location.topRight.y);
+        codeLocationCanvasContext.lineTo(location.bottomRight.x, location.bottomRight.y);
+        codeLocationCanvasContext.lineTo(location.bottomLeft.x, location.bottomLeft.y);
+        codeLocationCanvasContext.closePath();
+        codeLocationCanvasContext.lineWidth = 3;
+        codeLocationCanvasContext.strokeStyle = "rgba(46, 192, 204, 0.6)";
+        codeLocationCanvasContext.stroke();
+        codeLocationCanvasContext.fillStyle = "rgba(46, 192, 204, 0.3)";
+        codeLocationCanvasContext.fill();
+      }
+
+      // Configure the library and activate it with a license key
+      ScanditSDK.configure("YOUR_LICENSE_KEY_IS_NEEDED_HERE", {
+        // Configure the engine location, as explained on http://docs.scandit.com/stable/web/index.html
+        engineLocation: "https://unpkg.com/scandit-sdk/build"
+      }).then(function() {
+        return ScanditSDK.BarcodePicker.create(document.getElementById("barcode-picker"), { videoFit: videoFit, guiStyle: ScanditSDK.BarcodePicker.GuiStyle.NONE, playSoundOnScan: true })
+          .then(function(barcodePicker) {
+            // Insert the code location canvas inside the scandit barcode picker element
+            document.getElementsByClassName("scandit-barcode-picker")[0].appendChild(codeLocationCanvasElement);
+
+            // Adjust code location canvas context size based on currently active camera resolution
+            var activeCamera = barcodePicker.getActiveCamera();
+            codeLocationCanvasContext.canvas.width = activeCamera.currentResolution.width;
+            codeLocationCanvasContext.canvas.height = activeCamera.currentResolution.height;
+            // Mirror the code location canvas if the camera image is also mirrored
+            if (barcodePicker.isMirrorImageEnabled()) {
+              codeLocationCanvasElement.classList.add("mirrored");
+            }
+
+            var scanSettings = new ScanditSDK.ScanSettings({ enabledSymbologies: ["ean8", "ean13", "upca", "upce", "code128", "code39", "code93", "itf"], codeDuplicateFilter: 1000 });
+            barcodePicker.applyScanSettings(scanSettings);
+            barcodePicker.onScan(function(scanResult) {
+              // Erase previous code locations
+              codeLocationCanvasContext.clearRect(0, 0, codeLocationCanvasContext.canvas.width, codeLocationCanvasContext.canvas.height);
+              // Draw new code locations
+              scanResult.barcodes.forEach(function(barcode) {
+                drawCodeLocation(barcode.location);
+              });
+            });
+            barcodePicker.onScanError(function(error) {
+              console.error(error.message);
+            });
+          });
+      })
+      .catch(function(error) {
+        alert(error);
+      });
+
+    </script>
+  </body>
+
+</html>

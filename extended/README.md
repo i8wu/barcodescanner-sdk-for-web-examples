@@ -3,12 +3,12 @@ To get started with the Scandit Web SDK, take a look at the [documentation](http
 # Running the extended sample
 
 ## License key
-Replace `"-- ENTER YOUR SCANDIT LICENSE KEY HERE --"` in `src/config.js` with your license key. If you don't have a
+Replace `"YOUR_LICENSE_KEY_IS_NEEDED_HERE"` in `src/config.js` with your license key. If you don't have a
 license key yet, you can sign up for a trial [here](https://ssl.scandit.com/customers/new?p=test&source=websdk).
 
 ## Local server
 
-_Make sure you run `npm install` to install the dependencies for the project, including the Scandit Web SDK.  
+_Make sure you run `npm install` to install the dependencies for the project, including the Scandit Web SDK.
 If you don't know what `npm` is, you can learn more [here](https://www.npmjs.com/#pane-what-is-npm)._
 
 You can simply run `npm start` afterwards to start the development server with live reload and you can dive into the
@@ -23,7 +23,7 @@ npm start
 ## Notes for local development on a device
 
 For accessing your local development server from a device other than your development machine, a service like
-[ngrok](https://ngrok.com/) can be used.  
+[ngrok](https://ngrok.com/) can be used.
 If the local development server is running, you can get a publicly available address to access it with the following
 commands that assume that the local server is accessible on port 8080:
 ```bash

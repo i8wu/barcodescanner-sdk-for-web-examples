@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { configure, BarcodePicker as ScanditSDKBarcodePicker } from "scandit-sdk";
 
 // Configure the library and activate it with a license key
-configure("-- ENTER YOUR SCANDIT LICENSE KEY HERE --").catch(error => {
+configure("YOUR_LICENSE_KEY_IS_NEEDED_HERE").catch(error => {
   alert(error);
 });
 

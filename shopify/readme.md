@@ -27,7 +27,7 @@ This snippet holds the code responsible for the scanner, including:
     left: 50%;
     z-index: 1000;
   }
-  
+
   @media only screen and (min-width: 750px) {
     #scandit-barcode-picker {
       top: 81px;
@@ -42,7 +42,7 @@ This snippet holds the code responsible for the scanner, including:
     window.ScanditScanner = window.ScanditScanner || {};
 
     // Configure the library and activate it with a license key
-    window.ScanditScanner.licenseKey = "-- ENTER YOUR SCANDIT LICENSE KEY HERE --";
+    window.ScanditScanner.licenseKey = "YOUR_LICENSE_KEY_IS_NEEDED_HERE";
     window.ScanditScanner.engineLocation = "https://unpkg.com/scandit-sdk/build"
     ScanditSDK.configure(window.ScanditScanner.licenseKey, { engineLocation: window.ScanditScanner.engineLocation });
 
@@ -50,7 +50,7 @@ This snippet holds the code responsible for the scanner, including:
     window.ScanditScanner.scannerContainer.style.top = document.getElementById('shopify-section-header').offsetHeight + 'px';
     window.ScanditScanner.scanButton = document.getElementById("scandit-scan-button");
     window.ScanditScanner.scannerContainer.style.opacity = 0;
-  
+
     // Create & start the picker
     ScanditSDK.BarcodePicker.create(window.ScanditScanner.scannerContainer)
         .then(barcodePicker => {
@@ -94,7 +94,7 @@ This snippet holds the scan button. The referenced image *needs to be uploaded u
     display: inline;
     margin-right: 15px;
   }
-  
+
   .medium-up--hide #scandit-scan-button {
     margin-right: 0;
   }

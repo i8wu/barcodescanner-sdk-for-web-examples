@@ -7,7 +7,7 @@ import { AppComponent } from "./app.component";
 
 // tslint:disable-next-line:max-line-length
 const licenseKey: string = "YOUR_LICENSE_KEY_IS_NEEDED_HERE";
-const engineLocation: string = "https://unpkg.com/scandit-sdk/build";
+const engineLocation: string = "https://unpkg.com/scandit-sdk/build"; // could also be e.g. "build"
 
 @NgModule({
   declarations: [AppComponent, ScanditPickerComponent],

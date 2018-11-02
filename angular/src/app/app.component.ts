@@ -33,8 +33,6 @@ export class AppComponent {
   public cameraAccess: boolean = true;
   public enableSoundOnScan: boolean = true;
 
-  public mode: string;
-
   public possibleCameras: Camera[] = [];
 
   constructor(private scandit: ScanditService) {

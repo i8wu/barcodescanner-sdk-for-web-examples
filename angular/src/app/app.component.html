@@ -5,7 +5,7 @@ Ready: {{isReady}}
       Aspect ratio
       <ul>
         <li>
-          <button (click)="width = 'auto'; height = '150px'">Long</button>
+          <button (click)="width = '60vw'; height = '35vw'">Wide</button>
         </li>
         <li>
           <button (click)="width = '20vw'; height = '45vw'">Tall</button>
@@ -108,7 +108,7 @@ Ready: {{isReady}}
                 [vibrateOnScan]="enableVibrateOnScan"
                 [videoFit]="videoFit"
                 [visible]="visible"
-                [style.height]="height"
+                [style.height]="height || '35vw'"
                 [style.width]="width || '60vw'"
                 (scan)="onScan($event)"
                 (init)="isReady = false" (ready)="isReady = true"></scandit-picker>

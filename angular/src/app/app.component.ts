@@ -1,7 +1,6 @@
 // tslint:disable:missing-jsdoc
 import { Component, ViewChild } from "@angular/core";
 import { Barcode, BarcodePicker, Camera, CameraAccess, CameraSettings, ScanResult, ScanSettings } from "scandit-sdk";
-import { ScanditPickerComponent, ScanditService } from "scandit-sdk-angular";
 
 @Component({
   selector: "app-root",
@@ -9,8 +8,6 @@ import { ScanditPickerComponent, ScanditService } from "scandit-sdk-angular";
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-  @ViewChild("picker") public picker: ScanditPickerComponent;
-
   public activeSettings: ScanSettings;
   public settings128: ScanSettings;
   public settings39: ScanSettings;
@@ -35,7 +32,7 @@ export class AppComponent {
 
   public possibleCameras: Camera[] = [];
 
-  constructor(private scandit: ScanditService) {
+  constructor() {
     this.settings128 = new ScanSettings({
       enabledSymbologies: [Barcode.Symbology.CODE128]
     });

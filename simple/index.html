@@ -5,18 +5,8 @@
     <meta charset="UTF-8">
     <title>Scandit Web SDK</title>
 
-    <!--
-        Add the library, as explained on http://docs.scandit.com/stable/web/index.html
-    -->
-    <script src="https://unpkg.com/scandit-sdk"></script>
-    <!-- or -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/scandit-sdk"></script> -->
-    <!-- or -->
-    <!-- <script src="https://unpkg.com/scandit-sdk@1.0.5"></script> -->
-    <!-- or -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@1.0.5"></script> -->
-    <!-- or -->
-    <!-- <script src="/node_modules/scandit-sdk/build/browser/index.min.js"></script> -->
+    <!-- Add the library, as explained on http://docs.scandit.com/stable/web/index.html -->
+    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@4.x"></script>
 
     <style>
         body {
@@ -99,9 +89,10 @@
         // Configure the library and activate it with a license key
         const licenseKey = "YOUR_LICENSE_KEY_IS_NEEDED_HERE";
 
+        // Configure the engine location, as explained on http://docs.scandit.com/stable/web/index.html
         // const engineLocation = "build"; // the folder containing the engine
-        // or, if using a CDN,
-        const engineLocation = "https://unpkg.com/scandit-sdk/build"
+        // or, if using a CDN:
+        const engineLocation = "https://cdn.jsdelivr.net/npm/scandit-sdk@4.x/build"
 
         ScanditSDK.configure(licenseKey, { engineLocation: engineLocation });
 

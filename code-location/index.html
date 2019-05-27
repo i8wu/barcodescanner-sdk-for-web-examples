@@ -4,8 +4,9 @@
   <head>
     <meta charset="utf-8">
     <title>Scandit Example Page</title>
+
     <!-- Add the library, as explained on http://docs.scandit.com/stable/web/index.html -->
-    <script src="https://unpkg.com/scandit-sdk"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@4.x"></script>
     <style>
       .scanner {
         position: absolute;
@@ -65,7 +66,7 @@
       // Configure the library and activate it with a license key
       ScanditSDK.configure("YOUR_LICENSE_KEY_IS_NEEDED_HERE", {
         // Configure the engine location, as explained on http://docs.scandit.com/stable/web/index.html
-        engineLocation: "https://unpkg.com/scandit-sdk/build"
+        engineLocation: "https://cdn.jsdelivr.net/npm/scandit-sdk@4.x/build"
       }).then(function() {
         return ScanditSDK.BarcodePicker.create(document.getElementById("barcode-picker"), { videoFit: videoFit, guiStyle: ScanditSDK.BarcodePicker.GuiStyle.NONE, playSoundOnScan: true })
           .then(function(barcodePicker) {

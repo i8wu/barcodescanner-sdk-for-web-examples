@@ -43,7 +43,7 @@ This snippet holds the code responsible for the scanner, including:
 
     // Configure the library and activate it with a license key
     window.ScanditScanner.licenseKey = "YOUR_LICENSE_KEY_IS_NEEDED_HERE";
-    window.ScanditScanner.engineLocation = "https://unpkg.com/scandit-sdk/build"
+    window.ScanditScanner.engineLocation = "https://cdn.jsdelivr.net/npm/scandit-sdk@4.x/build"
     ScanditSDK.configure(window.ScanditScanner.licenseKey, { engineLocation: window.ScanditScanner.engineLocation });
 
     window.ScanditScanner.scannerContainer = document.getElementById("scandit-barcode-picker");
@@ -130,7 +130,7 @@ You need to add the library itself, as well as the scanner in the `theme.liquid`
 ...
 <head>
   ...
-  <script src="https://unpkg.com/scandit-sdk"></script>
+  <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@4.x"></script>
   ...
 </head>
 <body>

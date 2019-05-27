@@ -8,7 +8,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
 
     <!-- Add the library, as explained on http://docs.scandit.com/stable/web/index.html -->
-    <script src="https://unpkg.com/scandit-sdk"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@4.x"></script>
 </head>
 
 <body onclick="console.log('body clicked')">
@@ -52,7 +52,8 @@
         // Configure the library and activate it with a license key
         const licenseKey = "YOUR_LICENSE_KEY_IS_NEEDED_HERE";
 
-        const engineLocation = "https://unpkg.com/scandit-sdk/build"
+        // Configure the engine location, as explained on http://docs.scandit.com/stable/web/index.html
+        const engineLocation = "https://cdn.jsdelivr.net/npm/scandit-sdk@4.x/build"
 
         ScanditSDK.configure(licenseKey, { engineLocation: engineLocation });
 

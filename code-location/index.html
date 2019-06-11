@@ -73,20 +73,20 @@
             // Insert the code location canvas inside the scandit barcode picker element
             document.getElementsByClassName("scandit-barcode-picker")[0].appendChild(codeLocationCanvasElement);
 
-            // Adjust code location canvas context size based on currently active camera resolution
             var activeCamera = barcodePicker.getActiveCamera();
-            codeLocationCanvasContext.canvas.width = activeCamera.currentResolution.width;
-            codeLocationCanvasContext.canvas.height = activeCamera.currentResolution.height;
-            // Mirror the code location canvas if the camera image is also mirrored
-            if (barcodePicker.isMirrorImageEnabled()) {
-              codeLocationCanvasElement.classList.add("mirrored");
-            }
 
             var scanSettings = new ScanditSDK.ScanSettings({ enabledSymbologies: ["ean8", "ean13", "upca", "upce", "code128", "code39", "code93", "itf"], codeDuplicateFilter: 1000 });
             barcodePicker.applyScanSettings(scanSettings);
             barcodePicker.onScan(function(scanResult) {
               // Erase previous code locations
               codeLocationCanvasContext.clearRect(0, 0, codeLocationCanvasContext.canvas.width, codeLocationCanvasContext.canvas.height);
+              // Adjust code location canvas context size based on currently active camera resolution
+              codeLocationCanvasContext.canvas.width = activeCamera.currentResolution.width;
+              codeLocationCanvasContext.canvas.height = activeCamera.currentResolution.height;
+              // Mirror code location canvas if the camera image is also mirrored
+              if (barcodePicker.isMirrorImageEnabled()) {
+                codeLocationCanvasElement.classList.add("mirrored");
+              }
               // Draw new code locations
               scanResult.barcodes.forEach(function(barcode) {
                 drawCodeLocation(barcode.location);

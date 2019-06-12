@@ -1,5 +1,10 @@
 This repository contains samples that show how to use the Scandit Barcode Scanner SDK for the Web.
 
+- **vanilla-samples**: WebSDK used with plain/native JavaScript without any additional libraries.
+- **angular-samples**: WebSDK used in combination with the [Angular](https://angular.io/) framework.
+- **react-samples**: WebSDK used in combination with the [React](https://reactjs.org/) framework.
+- **integration-samples**: WebSDK integrated with other products/services/platforms.
+
 # Scandit Barcode Scanner SDK for the Web
 
 Enterprise barcode scanning performance in your browser via JavaScript and WebAssembly.

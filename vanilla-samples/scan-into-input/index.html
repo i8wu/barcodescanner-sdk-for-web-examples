@@ -73,11 +73,11 @@
                 });
                 picker.applyScanSettings(scanSettings);
 
-                picker.onScan(scanResult => {
+                picker.on("scan", scanResult => {
                     stopScanning();
                     scanInput.value = scanResult.barcodes[0].data;
                 });
-                picker.onScanError(error => alert(error.message));
+                picker.on("scanError", error => alert(error.message));
                 picker.resumeScanning();
             })
             .catch(alert);

@@ -1,5 +1,5 @@
 // tslint:disable:missing-jsdoc
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import { Barcode, BarcodePicker, Camera, CameraAccess, CameraSettings, ScanResult, ScanSettings } from "scandit-sdk";
 
 @Component({

@@ -62,16 +62,16 @@ This snippet holds the code responsible for the scanner, including:
             window.ScanditScanner.picker.applyScanSettings(scanSettings);
             // If a barcode is scanned, show it to the user and pause scanning
             // (scanning is resumed when the user clicks "Continue Scanning")
-            window.ScanditScanner.picker.onScan(scanResult => {
+            window.ScanditScanner.picker.on("scan", scanResult => {
                 window.ScanditScanner.scannerContainer.style.opacity = 0;
                 window.ScanditScanner.picker.pauseScanning();
                 console.log(scanResult);
                 window.location = window.location.origin + "/search?q=" + scanResult.barcodes[0].data;
             });
-            window.ScanditScanner.picker.onScanError(error => {
+            window.ScanditScanner.picker.on("scanError", error => {
                 alert(error.message);
             });
-            window.ScanditScanner.picker.onReady(() => {
+            window.ScanditScanner.picker.on("ready", () => {
                console.info('scandit ready!')
             });
             window.ScanditScanner.picker.resumeScanning();

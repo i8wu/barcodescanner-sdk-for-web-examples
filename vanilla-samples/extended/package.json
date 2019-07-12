@@ -9,7 +9,7 @@
     "start": "webpack-dev-server"
   },
   "dependencies": {
-    "scandit-sdk": "4.x"
+    "scandit-sdk": "^4.4"
   },
   "devDependencies": {
     "webpack": "^4.32.2",

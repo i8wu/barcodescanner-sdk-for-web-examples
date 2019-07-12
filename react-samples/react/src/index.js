@@ -48,10 +48,10 @@ class BarcodePicker extends Component {
     ScanditSDKBarcodePicker.create(this.ref.current, this.props).then(barcodePicker => {
       this.barcodePicker = barcodePicker;
       if (this.props.onScan != null) {
-        barcodePicker.onScan(this.props.onScan);
+        barcodePicker.on("scan", this.props.onScan);
       }
       if (this.props.onError != null) {
-        barcodePicker.onScanError(this.props.onError);
+        barcodePicker.on("scanError", this.props.onError);
       }
     });
   }

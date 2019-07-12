@@ -44,7 +44,7 @@ export class App {
 
     /**
      * Start the app by starting the scanner in the background and showing the settings
-     * 
+     *
      */
     start() {
         this.startScanner().then(() => ViewFunctions.showSettings());
@@ -77,8 +77,8 @@ export class App {
                 this.picker = barcodePicker;
 
                 // Setup the picker callbacks
-                this.picker.onScan(this.onScan.bind(this));
-                this.picker.onScanError(this.handleError.bind(this));
+                this.picker.on("scan", this.onScan.bind(this));
+                this.picker.on("scanError", this.handleError.bind(this));
                 return this.picker;
             })
             .catch(this.handleError);
@@ -88,7 +88,7 @@ export class App {
      * After scanning, pause the scanner if we're not scanning continuously and show the scanned barcodes
      * @see http://docs.scandit.com/stable/web/classes/barcodepicker.html#onscan
      *
-     * @param {ScanResult} scanResult 
+     * @param {ScanResult} scanResult
      */
     onScan(scanResult) {
         if (!this.continuousScanning) {

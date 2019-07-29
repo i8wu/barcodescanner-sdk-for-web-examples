@@ -16,3 +16,5 @@ Access cameras available on the devices for video input, display a barcode picke
 To use the library you must possess a valid Scandit account and license key. You can register for a free trial [here](https://ssl.scandit.com/customers/new?p=test&source=websdk).
 
 **_An updated in-depth documentation of all of the libraries' specifications and functionalities can be found at [https://docs.scandit.com/stable/web](https://docs.scandit.com/stable/web)._**
+
+Find out more information on our JavaScript/TypeScript barcode scanner on our [website](https://www.scandit.com/products/sdk-web/).

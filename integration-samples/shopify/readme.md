@@ -1,7 +1,7 @@
 # Integration in a Shopify template
 
 ## Example
-[https://scandit-web-sdk-demo.myshopify.com/](https://scandit-web-sdk-demo.myshopify.com/)
+[https://scandit-web-sdk-demo1.myshopify.com/](https://scandit-web-sdk-demo1.myshopify.com/)
 
 Add a button in the header to search for a scanned product.
 

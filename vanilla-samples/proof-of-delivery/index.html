@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Scandit Proof of Delivery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@4.x"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@3.0.0-beta.3/dist/signature_pad.umd.min.js"></script>
+
+    <link href="https://cdn.muicss.com/mui-0.10.1/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.muicss.com/mui-0.10.1/js/mui.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet" />
+    <style>
+      [hidden] {
+        display: none !important;
+      }
+
+      body {
+        height: 100vh;
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+      }
+
+      .container {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 100vw;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        overflow: hidden;
+      }
+
+      .signature-hint {
+        position: relative;
+        top: 85px;
+        text-align: center;
+      }
+
+      .signature-canvas,
+      .barcode-picker {
+        z-index: 10;
+        width: 100%;
+        height: 150px;
+        box-sizing: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.26);
+        padding: 2px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="mui-container-fluid">
+        <div class="mui-row">
+          <div
+            class="mui-col-xs-10 mui-col-xs-offset-1 mui-col-sm-8 mui-col-sm-offset-2 mui-col-md-6 mui-col-md-offset-3 mui-col-lg-4 mui-col-lg-offset-4"
+          >
+            <div id="scan-content" class="content">
+              <div class="mui-textfield mui-textfield--float-label">
+                <input type="text" id="input-field" />
+                <label>Package ID</label>
+              </div>
+              <div id="barcode-picker" class="barcode-picker"></div>
+              <br />
+              <div class="signature-hint mui--text-dark-hint mui--no-user-select">Sign here</div>
+              <canvas id="signature-canvas" class="signature-canvas"></canvas>
+              <br />
+              <button id="confirm-button" class="mui-btn mui-btn--primary" disabled>Confirm Delivery</button>
+            </div>
+            <div id="result-content" class="content" hidden>
+              <div class="mui--text-title">Delivery Confirmed</div>
+              <div class="mui--text-body1">Package ID: <span id="result-package-id"></span></div>
+              <img id="result-signature" class="result-signature" />
+              <button id="reset-button" class="mui-btn mui-btn--primary">Scan Another Package</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const scanContent = document.getElementById("scan-content");
+      const resultContent = document.getElementById("result-content");
+      const inputField = document.getElementById("input-field");
+      const confirmButton = document.getElementById("confirm-button");
+      const resetButton = document.getElementById("reset-button");
+      const resultPackageId = document.getElementById("result-package-id");
+      const resultSignature = document.getElementById("result-signature");
+      let barcodePicker;
+      let signaturePad;
+      let packageId;
+      let barcodeDataAvailable;
+      let signatureDataAvailable;
+
+      function reset() {
+        barcodeDataAvailable = false;
+        signatureDataAvailable = false;
+        barcodePicker.clearSession();
+        barcodePicker.resumeScanning();
+        signaturePad.clear();
+        confirmButton.disabled = true;
+
+        resultContent.hidden = true;
+        scanContent.hidden = false;
+      }
+
+      function confirm() {
+        scanContent.hidden = true;
+        resultContent.hidden = false;
+
+        resultPackageId.innerText = packageId;
+        resultSignature.src = signaturePad.toDataURL("image/svg+xml");
+
+        // Do meaningful things with available data here
+      }
+
+      function checkAllDataAvailable() {
+        if (barcodeDataAvailable && signatureDataAvailable) {
+          confirmButton.disabled = false;
+        }
+      }
+
+      function setupSignaturePad() {
+        const signatureCanvas = document.getElementById("signature-canvas");
+        signaturePad = new SignaturePad(signatureCanvas);
+
+        function resizeCanvas() {
+          var ratio = Math.max(window.devicePixelRatio || 1, 1);
+          signatureCanvas.width = signatureCanvas.offsetWidth * ratio;
+          signatureCanvas.height = signatureCanvas.offsetHeight * ratio;
+          signatureCanvas.getContext("2d").scale(ratio, ratio);
+          signaturePad.clear();
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        signatureCanvas.addEventListener("pointerup", () => {
+          signatureDataAvailable = true;
+          checkAllDataAvailable();
+        });
+      }
+
+      setupSignaturePad();
+
+      resetButton.addEventListener("click", reset);
+      confirmButton.addEventListener("click", confirm);
+
+      ScanditSDK.configure("YOUR_LICENSE_KEY_IS_NEEDED_HERE", {
+        engineLocation: "https://cdn.jsdelivr.net/npm/scandit-sdk@4.x/build"
+      })
+        .then(() => {
+          return ScanditSDK.BarcodePicker.create(document.getElementById("barcode-picker"), {
+            playSoundOnScan: true,
+            vibrateOnScan: true,
+            videoFit: ScanditSDK.BarcodePicker.ObjectFit.COVER
+          }).then(picker => {
+            barcodePicker = picker;
+            barcodePicker.applyScanSettings(
+              new ScanditSDK.ScanSettings({
+                enabledSymbologies: [
+                  ScanditSDK.Barcode.Symbology.CODE128,
+                  ScanditSDK.Barcode.Symbology.CODE39,
+                  ScanditSDK.Barcode.Symbology.DATA_MATRIX,
+                  ScanditSDK.Barcode.Symbology.QR,
+                  ScanditSDK.Barcode.Symbology.UPCA,
+                  ScanditSDK.Barcode.Symbology.UPCE,
+                  ScanditSDK.Barcode.Symbology.EAN13
+                ],
+                codeDuplicateFilter: -1
+              })
+            );
+            barcodePicker
+              .on("scan", scanResult => {
+                barcodePicker.pauseScanning();
+                packageId = scanResult.barcodes[0].data;
+                inputField.value = packageId;
+                inputField.dispatchEvent(new Event("change"));
+                barcodeDataAvailable = true;
+                checkAllDataAvailable();
+              })
+              .on("scanError", console.error);
+            reset();
+          });
+        })
+        .catch(console.error);
+    </script>
+  </body>
+</html>

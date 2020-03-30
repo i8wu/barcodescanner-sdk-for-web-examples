@@ -121,6 +121,37 @@
         resultSignature.src = signaturePad.toDataURL("image/svg+xml");
 
         // Do meaningful things with available data here
+
+        // Example: Send data to API endpoint via POST request
+
+        // const request = new XMLHttpRequest();
+        // request.onerror = request.onload = console.log;
+
+        // Example option 1: Send the signature image as binary data to an API endpoint for the given package ID
+        // signaturePad.canvas.toBlob(signatureBinaryData => {
+        //   request.open("POST", "https://example.com/" + packageId);
+        //   request.setRequestHeader("Content-type", "image/png");
+        //   request.send(signatureBinaryData);
+        // }, "image/png");
+
+        // Example option 2: Send all data as JSON to an API endpoint
+        // request.open("POST", "https://example.com/json");
+        // request.setRequestHeader("Content-type", "application/json; charset=utf-8");
+        // request.send(
+        //   JSON.stringify({
+        //     packageId: packageId,
+        //     signatureDataURL: signaturePad.toDataURL()
+        //   })
+        // );
+
+        // Example option 3: Send all data as form data to an API endpoint
+        // request.open("POST", "https://example.com/form");
+        // signaturePad.canvas.toBlob(signatureBinaryData => {
+        //   const formData = new FormData();
+        //   formData.set("packageId", packageId);
+        //   formData.set("signatureBinaryData", signatureBinaryData);
+        //   request.send(formData);
+        // }, "image/png");
       }
 
       function checkAllDataAvailable() {

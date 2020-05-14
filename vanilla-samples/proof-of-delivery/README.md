@@ -1,4 +1,4 @@
-# Proof of Delivery sample
+# Proof of Delivery/Completion sample
 
 This sample shows the Scandit Barcode Scanner SDK
 for the Web being integrated in a sample website providing a self-sign solution to confirm the delivery of goods or completion of installation/repairs.

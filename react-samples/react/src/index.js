@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import { configure, BarcodePicker as ScanditSDKBarcodePicker } from "scandit-sdk";
 
 // Configure the library and activate it with a license key
-configure("YOUR_LICENSE_KEY_IS_NEEDED_HERE").catch(error => {
+const configurationPromise = configure(
+  "YOUR_LICENSE_KEY_IS_NEEDED_HERE"
+).catch((error) => {
   alert(error);
 });
 
@@ -15,7 +17,7 @@ const style = {
   right: "0",
   margin: "auto",
   maxWidth: "1280px",
-  maxHeight: "80%"
+  maxHeight: "80%",
 };
 
 class BarcodePicker extends Component {
@@ -36,7 +38,7 @@ class BarcodePicker extends Component {
     cameraSettings: PropTypes.object,
     targetScanningFPS: PropTypes.number,
     onScan: PropTypes.func,
-    onError: PropTypes.func
+    onError: PropTypes.func,
   };
 
   constructor(props) {
@@ -45,14 +47,16 @@ class BarcodePicker extends Component {
   }
 
   componentDidMount() {
-    ScanditSDKBarcodePicker.create(this.ref.current, this.props).then(barcodePicker => {
-      this.barcodePicker = barcodePicker;
-      if (this.props.onScan != null) {
-        barcodePicker.on("scan", this.props.onScan);
-      }
-      if (this.props.onError != null) {
-        barcodePicker.on("scanError", this.props.onError);
-      }
+    configurationPromise.then(() => {
+      ScanditSDKBarcodePicker.create(this.ref.current, this.props).then((barcodePicker) => {
+        this.barcodePicker = barcodePicker;
+        if (this.props.onScan != null) {
+          barcodePicker.on("scan", this.props.onScan);
+        }
+        if (this.props.onError != null) {
+          barcodePicker.on("scanError", this.props.onError);
+        }
+      });
     });
   }
 

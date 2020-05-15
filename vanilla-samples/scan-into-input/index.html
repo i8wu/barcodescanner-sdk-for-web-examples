@@ -1,87 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Scandit Web SDK</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 
     <!-- Add the library, as explained on http://docs.scandit.com/stable/web/index.html -->
-    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@4.x"></script>
-</head>
+    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@5.x"></script>
+  </head>
 
-<body onclick="console.log('body clicked')">
+  <body onclick="console.log('body clicked')">
     <div id="scandit-barcode-picker"></div>
     <div id="input-container">
-        <input id="scan-input" type="text" placeholder="Search">
-        <button id="scan" onclick="scan()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="127" height="127" viewBox="0 0 127 127"><g fill="none" fill-rule="evenodd"><g class="base" fill="#000000"><g transform="translate(16 70)"><polygon points="26 37 43 37 43 0 26 0"/><polygon points="85 37 94 37 94 0 85 0"/><polygon points="0 37 9 37 9 0 0 0"/><polygon points="11 37 20 37 20 0 11 0"/><polygon points="74 37 83 37 83 0 74 0"/><polygon points="63 37 72 37 72 0 63 0"/><polygon points="46 37 55 37 55 0 46 0"/></g><g transform="translate(16 20)"><polygon points="26 37 43 37 43 0 26 0"/><polygon points="85 37 94 37 94 0 85 0"/><polygon points="0 37 9 37 9 0 0 0"/><polygon points="11 37 20 37 20 0 11 0"/><polygon points="74 37 83 37 83 0 74 0"/><polygon points="63 37 72 37 72 0 63 0"/><polygon points="46 37 55 37 55 0 46 0"/></g><g fill-rule="nonzero"><polygon points="126 0 94 0 94 3.693 122.307 3.693 122.307 32 126 32"/><polygon points="3.693 3.693 32 3.693 32 0 0 0 0 32 3.693 32"/><polygon points="122.307 123.307 94 123.307 94 127 126 127 126 95 122.307 95"/><polygon points="0 127 32 127 32 123.307 3.693 123.307 3.693 95 0 95"/></g></g><polygon class="scanline" fill="#2EC1CE" fill-rule="nonzero" points="0 62 0 65 127 65 127 62"/></g></svg>
-        </button>
+      <input id="scan-input" type="text" placeholder="Search" />
+      <button id="scan" onclick="scan()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="127" height="127" viewBox="0 0 127 127"><g fill="none" fill-rule="evenodd"><g class="base" fill="#000000"><g transform="translate(16 70)"><polygon points="26 37 43 37 43 0 26 0"/><polygon points="85 37 94 37 94 0 85 0"/><polygon points="0 37 9 37 9 0 0 0"/><polygon points="11 37 20 37 20 0 11 0"/><polygon points="74 37 83 37 83 0 74 0"/><polygon points="63 37 72 37 72 0 63 0"/><polygon points="46 37 55 37 55 0 46 0"/></g><g transform="translate(16 20)"><polygon points="26 37 43 37 43 0 26 0"/><polygon points="85 37 94 37 94 0 85 0"/><polygon points="0 37 9 37 9 0 0 0"/><polygon points="11 37 20 37 20 0 11 0"/><polygon points="74 37 83 37 83 0 74 0"/><polygon points="63 37 72 37 72 0 63 0"/><polygon points="46 37 55 37 55 0 46 0"/></g><g fill-rule="nonzero"><polygon points="126 0 94 0 94 3.693 122.307 3.693 122.307 32 126 32"/><polygon points="3.693 3.693 32 3.693 32 0 0 0 0 32 3.693 32"/><polygon points="122.307 123.307 94 123.307 94 127 126 127 126 95 122.307 95"/><polygon points="0 127 32 127 32 123.307 3.693 123.307 3.693 95 0 95"/></g></g><polygon class="scanline" fill="#2EC1CE" fill-rule="nonzero" points="0 62 0 65 127 65 127 62"/></g></svg>
+      </button>
     </div>
 
     <script>
-        function scan() {
-            startScanning();
-        }
+      const scannerContainer = document.getElementById("scandit-barcode-picker");
+      scannerContainer.style.opacity = "0";
+      scannerContainer.style.zIndex = "-1";
+      const scanInput = document.getElementById("scan-input");
+      let picker;
 
-        function showScanner() {
-            scannerContainer.style.opacity = "1";
-            scannerContainer.style.zIndex = "1";
-        }
+      function scan() {
+        startScanning();
+      }
 
-        function hideScanner() {
-            scannerContainer.style.opacity = "0";
-            scannerContainer.style.zIndex = "-1";
-        }
+      function showScanner() {
+        scannerContainer.style.opacity = "1";
+        scannerContainer.style.zIndex = "1";
+      }
 
-        function startScanning() {
-            showScanner();
-            if (picker) {
-                picker.resumeScanning();
-            }
-        }
-
-        function stopScanning() {
-            hideScanner();
-            if (picker) {
-                picker.pauseScanning();
-            }
-        }
-
-        // Configure the library and activate it with a license key
-        const licenseKey = "YOUR_LICENSE_KEY_IS_NEEDED_HERE";
-
-        // Configure the engine location, as explained on http://docs.scandit.com/stable/web/index.html
-        const engineLocation = "https://cdn.jsdelivr.net/npm/scandit-sdk@4.x/build"
-
-        ScanditSDK.configure(licenseKey, { engineLocation: engineLocation });
-
-        const scannerContainer = document.getElementById("scandit-barcode-picker");
+      function hideScanner() {
         scannerContainer.style.opacity = "0";
         scannerContainer.style.zIndex = "-1";
-        const scanInput = document.getElementById("scan-input");
-        let picker;
+      }
 
+      function startScanning() {
+        showScanner();
+        if (picker) {
+          picker.resumeScanning();
+        }
+      }
+
+      function stopScanning() {
+        hideScanner();
+        if (picker) {
+          picker.pauseScanning();
+        }
+      }
+
+      // Configure the library and activate it with a license key
+      const licenseKey = "YOUR_LICENSE_KEY_IS_NEEDED_HERE";
+
+      // Configure the engine location, as explained on http://docs.scandit.com/stable/web/index.html
+      const engineLocation = "https://cdn.jsdelivr.net/npm/scandit-sdk@5.x/build";
+
+      ScanditSDK.configure(licenseKey, { engineLocation: engineLocation }).then(() => {
         // Create & start the picker
         ScanditSDK.BarcodePicker.create(scannerContainer)
-            .then(barcodePicker => {
-                picker = barcodePicker;
-                // Create the settings object to be applied to the scanner
-                const scanSettings = new ScanditSDK.ScanSettings({
-                    enabledSymbologies: ["ean8", "ean13", "upca", "upce", "code128", "code39"]
-                });
-                picker.applyScanSettings(scanSettings);
+          .then((barcodePicker) => {
+            picker = barcodePicker;
+            // Create the settings object to be applied to the scanner
+            const scanSettings = new ScanditSDK.ScanSettings({
+              enabledSymbologies: ["ean8", "ean13", "upca", "upce", "code128", "code39"],
+            });
+            picker.applyScanSettings(scanSettings);
 
-                picker.on("scan", scanResult => {
-                    stopScanning();
-                    scanInput.value = scanResult.barcodes[0].data;
-                });
-                picker.on("scanError", error => alert(error.message));
-                picker.resumeScanning();
-            })
-            .catch(alert);
+            picker.on("scan", (scanResult) => {
+              stopScanning();
+              scanInput.value = scanResult.barcodes[0].data;
+            });
+            picker.on("scanError", (error) => alert(error.message));
+
+            picker.resumeScanning();
+          })
+          .catch(alert);
+      });
     </script>
-</body>
-
+  </body>
 </html>

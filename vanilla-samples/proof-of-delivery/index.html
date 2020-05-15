@@ -5,7 +5,7 @@
     <title>Scandit Proof of Delivery</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@4.x"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@5.x"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@3.0.0-beta.3/dist/signature_pad.umd.min.js"></script>
 
@@ -186,14 +186,14 @@
       confirmButton.addEventListener("click", confirm);
 
       ScanditSDK.configure("YOUR_LICENSE_KEY_IS_NEEDED_HERE", {
-        engineLocation: "https://cdn.jsdelivr.net/npm/scandit-sdk@4.x/build"
+        engineLocation: "https://cdn.jsdelivr.net/npm/scandit-sdk@5.x/build",
       })
         .then(() => {
           return ScanditSDK.BarcodePicker.create(document.getElementById("barcode-picker"), {
             playSoundOnScan: true,
             vibrateOnScan: true,
-            videoFit: ScanditSDK.BarcodePicker.ObjectFit.COVER
-          }).then(picker => {
+            videoFit: ScanditSDK.BarcodePicker.ObjectFit.COVER,
+          }).then((picker) => {
             barcodePicker = picker;
             barcodePicker.applyScanSettings(
               new ScanditSDK.ScanSettings({
@@ -204,13 +204,13 @@
                   ScanditSDK.Barcode.Symbology.QR,
                   ScanditSDK.Barcode.Symbology.UPCA,
                   ScanditSDK.Barcode.Symbology.UPCE,
-                  ScanditSDK.Barcode.Symbology.EAN13
+                  ScanditSDK.Barcode.Symbology.EAN13,
                 ],
-                codeDuplicateFilter: -1
+                codeDuplicateFilter: -1,
               })
             );
             barcodePicker
-              .on("scan", scanResult => {
+              .on("scan", (scanResult) => {
                 barcodePicker.pauseScanning();
                 packageId = scanResult.barcodes[0].data;
                 inputField.value = packageId;

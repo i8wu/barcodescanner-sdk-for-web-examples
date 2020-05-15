@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Scandit Example Page</title>
 
     <!-- Add the library, as explained on http://docs.scandit.com/stable/web/index.html -->
-    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@4.x"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@5.x"></script>
     <style>
       .scanner {
         position: absolute;
@@ -67,18 +66,30 @@
       // Configure the library and activate it with a license key
       ScanditSDK.configure("YOUR_LICENSE_KEY_IS_NEEDED_HERE", {
         // Configure the engine location, as explained on http://docs.scandit.com/stable/web/index.html
-        engineLocation: "https://cdn.jsdelivr.net/npm/scandit-sdk@4.x/build"
-      }).then(function() {
-        return ScanditSDK.BarcodePicker.create(document.getElementById("barcode-picker"), { videoFit: videoFit, guiStyle: ScanditSDK.BarcodePicker.GuiStyle.NONE, playSoundOnScan: true })
-          .then(function(barcodePicker) {
+        engineLocation: "https://cdn.jsdelivr.net/npm/scandit-sdk@5.x/build",
+      })
+        .then(function () {
+          return ScanditSDK.BarcodePicker.create(document.getElementById("barcode-picker"), {
+            videoFit: videoFit,
+            guiStyle: ScanditSDK.BarcodePicker.GuiStyle.NONE,
+            playSoundOnScan: true,
+          }).then(function (barcodePicker) {
             // Insert the code location canvas inside the scandit barcode picker element
             document.getElementsByClassName("scandit-barcode-picker")[0].appendChild(codeLocationCanvasElement);
 
-            var scanSettings = new ScanditSDK.ScanSettings({ enabledSymbologies: ["ean8", "ean13", "upca", "upce", "code128", "code39", "code93", "itf"], codeDuplicateFilter: 1000 });
+            var scanSettings = new ScanditSDK.ScanSettings({
+              enabledSymbologies: ["ean8", "ean13", "upca", "upce", "code128", "code39", "code93", "itf"],
+              codeDuplicateFilter: 1000,
+            });
             barcodePicker.applyScanSettings(scanSettings);
-            barcodePicker.on("scan", function(scanResult) {
+            barcodePicker.on("scan", function (scanResult) {
               // Erase previous code locations
-              codeLocationCanvasContext.clearRect(0, 0, codeLocationCanvasContext.canvas.width, codeLocationCanvasContext.canvas.height);
+              codeLocationCanvasContext.clearRect(
+                0,
+                0,
+                codeLocationCanvasContext.canvas.width,
+                codeLocationCanvasContext.canvas.height
+              );
               // Adjust code location canvas context size based on currently active camera resolution
               codeLocationCanvasContext.canvas.width = scanResult.imageSettings.width;
               codeLocationCanvasContext.canvas.height = scanResult.imageSettings.height;
@@ -89,20 +100,18 @@
                 codeLocationCanvasElement.classList.remove("mirrored");
               }
               // Draw new code locations
-              scanResult.barcodes.forEach(function(barcode) {
+              scanResult.barcodes.forEach(function (barcode) {
                 drawCodeLocation(barcode.location);
               });
             });
-            barcodePicker.on("scanError", function(error) {
+            barcodePicker.on("scanError", function (error) {
               console.error(error.message);
             });
           });
-      })
-      .catch(function(error) {
-        alert(error);
-      });
-
+        })
+        .catch(function (error) {
+          alert(error);
+        });
     </script>
   </body>
-
 </html>

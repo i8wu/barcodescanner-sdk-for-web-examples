@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scandit UI Sample</title>
+    <script src="https://cdn.jsdelivr.net/npm/scandit-sdk@5.x"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+    <style>
+      [hidden] {
+        display: none !important;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100vh;
+      }
+
+      body {
+        height: 100vh;
+        padding: 4vh 0 0 0;
+        margin: 0;
+        background-color: white;
+        color: black;
+        text-align: center;
+        font: 400 2.5vh "Open Sans", sans-serif;
+      }
+
+      .home-selection {
+        height: calc(100% - 24vh);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logo {
+        height: 4vh;
+        background: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgODQgMTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTU4LjU4NSAwaC00LjkxNXMtMC4wNzg5NTYgMC0wLjA3ODk1NiAwLjA3NzE3NnYxMS41NTdjMCAwLjA5NjQ3IDAuMDM5NDc4IDAuMTE1NzYgMC4xMTg0MyAwLjExNTc2aDQuODU1OGMyLjk4MDYgMCA0LjgxNjMtMi4zMTUzIDQuODE2My02LjA3NzYgMC4wMTk3MzktMy4wNjc3LTIuMTMxOC01LjY3MjQtNC43OTY2LTUuNjcyNHptMC4xMDk2OCAxMC43NWgtMy44MTU0di05LjVoMy44MTU0YzEuOTg3MiAwIDMuNjU2NCAyLjExNzYgMy42NTY0IDQuNTI2NiAwIDEuMTY1Ni0wLjI1ODMzIDQuOTczNC0zLjY1NjQgNC45NzM0em0tNTIuOTgzLTUuNDcwMmgtMi4zMDQ1Yy0xLjM0MjYgMC0yLjIwNDMtMS4yMDk2LTIuMjA0My0yLjA1NDMgMC0wLjg0NDc3IDAuNjgxMzQtMi4wMzUxIDIuMjA0My0yLjAzNTFoNC45MDk2IDAuMDIwMDM5YzAuMDYwMTE4IDAgMC4xMjAyNC0wLjA1NzU5OCAwLjEyMDI0LTAuMTE1MnYtMC45NTk5N2MwLTAuMDU3NTk4LTAuMDYwMTE4LTAuMTE1Mi0wLjEyMDI0LTAuMTE1MmgtNC45Mjk3Yy0yLjEyNDIgMC0zLjQwNjcgMS42MzE5LTMuNDA2NyAzLjIwNjMgMCAxLjUxNjcgMS40MDI4IDMuMjA2MyAzLjQwNjcgMy4yMDYzaDIuMzA0NWMxLjM0MjYgMCAyLjA4NDEgMS4yMDk2IDIuMDg0MSAyLjA1NDMgMCAwLjgyNTU3LTAuNTYxMSAyLjExMTktMi4wODQxIDIuMTExOWgtNS4yOTA0Yy0wLjA2MDExOCAwLTAuMTIwMjQgMC4wNTc1OTgtMC4xMjAyNCAwLjExNTJ2MC45NDA3N2MwIDAuMDU3NTk4IDAuMDQwMDc5IDAuMTE1MiAwLjEyMDI0IDAuMTE1Mmg1LjMxMDRjMi4xMjQyIDAgMy4yODY1LTEuNzA4NyAzLjI4NjUtMy4yNjM5IDAtMC43Mjk1OC0wLjMyMDYzLTEuNTE2Ny0wLjg2MTY5LTIuMTExOS0wLjY0MTI2LTAuNzEwMzgtMS41MDMtMS4wOTQ0LTIuNDQ0OC0xLjA5NDR6bTI0LjU3NC01LjI2MDZzMC0wLjAxOTIzMS0wLjAzOTYxNC0wLjAxOTIzMWgtMS43NDNjLTAuMDE5ODA3IDAtMC4wMzk2MTQgMC4wMTkyMzEtMC4wMzk2MTQgMC4wMTkyMzFsLTMuMjA4OCAxMS42NzNzLTAuMDE5ODA3IDAuMDM4NDYyIDAuMDE5ODA3IDAuMDM4NDYyaDEuMTY4NmMwLjAxOTgwNyAwIDAuMDM5NjE0LTAuMDM4NDYyIDAuMDM5NjE0LTAuMDM4NDYybDIuODkxOS0xMC41MTkgMi44OTE5IDEwLjUzOHMwLjAxOTgwNyAwLjAzODQ2MiAwLjAzOTYxNCAwLjAzODQ2MmgxLjE0ODhjMC4wMzk2MTQgMCAwLjAzOTYxNC0wLjAzODQ2MiAwLjAzOTYxNC0wLjAzODQ2MmwtMy4yMDg4LTExLjY5MnptMTcuMDE5LTAuMDE5MjMxaC0wLjk5MDUzYy0wLjA1OTQzMiAwLTAuMTE4ODYgMC4wNTg2MzItMC4xMTg4NiAwLjExNzI2djAuMDM5MDg4IDkuNzkxNXMtNS44NjM5LTkuODUwMi01Ljg2MzktOS44Njk3Yy0wLjAxOTgxMS0wLjAxOTU0NC0wLjAzOTYyMS0wLjAzOTA4OC0wLjAzOTYyMS0wLjAzOTA4OGgtMS44NjIycy0wLjAzOTYyMSAwLTAuMDM5NjIxIDAuMDU4NjMydjExLjc4NWMwIDAuMDU4NjMyIDAuMDU5NDMyIDAuMTE3MjYgMC4xMTg4NiAwLjExNzI2aDAuOTcwNzJjMC4wNTk0MzIgMCAwLjExODg2LTAuMDU4NjMyIDAuMTE4ODYtMC4xMTcyNnYtMC4wNTg2MzItMTAuNjEyLTAuMDc4MTc2bDYuMzk4OCAxMC44NDcgMC4wMTk4MTEgMC4wMTk1NDRoMS4zMjczYzAuMDc5MjQyIDAgMC4wNTk0MzItMC4wNTg2MzIgMC4wNTk0MzItMC4wNTg2MzJ2LTExLjgwNWMwLjAxOTgxMS0wLjA3ODE3Ni0wLjAzOTYyMS0wLjEzNjgxLTAuMDk5MDUzLTAuMTM2ODF6bTIyLjAwMyAwLjExNzI2YzAtMC4wNTg2MzItMC4wNjMzNTYtMC4xMTcyNi0wLjEyNjcxLTAuMTE3MjZoLTEuMDM0OGMtMC4wNjMzNTYgMC0wLjEyNjcxIDAuMDU4NjMyLTAuMTI2NzEgMC4xMTcyNnYwLjEzNjgxIDExLjUxMSAwLjExNzI2YzAgMC4wNTg2MzIgMC4wNjMzNTYgMC4xMTcyNiAwLjEyNjcxIDAuMTE3MjZoMS4wMzQ4YzAuMDYzMzU2IDAgMC4xMjY3MS0wLjA1ODYzMiAwLjEyNjcxLTAuMTE3MjZ2LTAuMTE3MjYtMTEuNTExLTAuMTM2ODF6bTE0LjAxLTAuMTE3MjZoLTkuMjUyYy0wLjA2MDIwOCAwLTAuMTIwNDIgMC4wNTg2MzItMC4xMjA0MiAwLjExNzI2djAuOTU3NjVjMCAwLjA1ODYzMiAwLjA2MDIwOCAwLjExNzI2IDAuMTIwNDIgMC4xMTcyNmg0LjAzNHYxMC42OTFjMCAwLjA1ODYzMiAwLjA2MDIwOCAwLjExNzI2IDAuMTIwNDIgMC4xMTcyNmgwLjk4MzQxYzAuMDYwMjA4IDAgMC4xMjA0Mi0wLjA1ODYzMiAwLjEyMDQyLTAuMTE3MjZ2LTEwLjcxaDQuMDM0YzAuMDYwMjA4IDAgMC4xMjA0Mi0wLjA1ODYzMiAwLjEyMDQyLTAuMTE3MjZ2LTAuOTU3NjVjLTAuMDQwMTM5LTAuMDM5MDg4LTAuMTAwMzUtMC4wOTc3Mi0wLjE2MDU2LTAuMDk3NzJ6bS02MS43OCAxMC42MTRoLTQuNjM1N2MtMS42NTI3IDAtMy4zMjU2LTEuNDgzMi0zLjMyNTYtNC43IDAtMy4yMzYxIDEuOTc1Mi00LjczODUgMy4zMjU2LTQuNzM4NWg0LjU1NTEgMC4wMjAxNTVjMC4wNjA0NjYgMCAwLjEyMDkzLTAuMDU3Nzg3IDAuMTIwOTMtMC4xMTU1N3YtMC45NDM4NWMwLTAuMDU3Nzg3LTAuMDYwNDY2LTAuMTE1NTctMC4xMjA5My0wLjExNTU3aC0wLjAyMDE1NS00LjU1NTFjLTEuODc0NCAwLTQuNTM0OSAxLjgyOTktNC41MzQ5IDUuODk0MyAwIDQuMDA2NiAyLjI3NzUgNS44NTU3IDQuNTM0OSA1Ljg1NTdoNC41OTU0IDAuMDIwMTU1YzAuMDYwNDY2IDAgMC4xMjA5My0wLjA1Nzc4NyAwLjEyMDkzLTAuMTE1NTd2LTAuOTQzODVjMC4wMjAxNTUtMC4wMTkyNjItMC4wNDAzMS0wLjA3NzA0OS0wLjEwMDc4LTAuMDc3MDQ5eiIvPjwvc3ZnPg==)
+          no-repeat center;
+      }
+
+      .name {
+        text-transform: uppercase;
+        font-size: 3vh;
+        font-weight: bold;
+        margin: 4vh;
+      }
+
+      button {
+        display: block;
+        background-color: #555;
+        color: white;
+        font-size: 3vh;
+        font-family: inherit;
+        padding: 2vh 5vh;
+        margin: 2vh auto;
+        width: 70vw;
+        max-width: 500px;
+      }
+
+      input {
+        font-size: inherit;
+        width: 200px;
+        border: 1px solid black;
+        margin: 4vh;
+        padding: 0.5vh;
+      }
+
+      .scanner {
+        margin: auto;
+        max-width: 75vw;
+        max-height: 70vh;
+      }
+
+      .result-table {
+        text-align: center;
+        max-width: 75vw;
+        margin: 30px auto auto auto;
+      }
+
+      .result-table p {
+        height: 18px;
+        font-size: 2.5vh;
+        text-transform: uppercase;
+      }
+
+      .split-view-result-entries {
+        max-height: 200px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="logo"></div>
+    <div id="sample-name" class="name">UI SAMPLE</div>
+
+    <div id="home-selection" class="home-selection">
+      <div id="description" class="description" hidden>Select the mode you want to try out:</div>
+      <div id="lib-loading"><br />Library is loading, please wait...</div>
+      <button id="scan-into-input-button" onclick="startScanIntoInput();" hidden>Scan into Input</button>
+      <button id="split-view-button" onclick="startSplitView();" hidden>Split View</button>
+    </div>
+
+    <form id="scan-input" hidden onsubmit="event.preventDefault()">
+      <p>Click in the input field to start the scanner</p>
+      Input: <input id="code" onfocus="scanIntoInputShowScanner(event);" readonly="true" />
+    </form>
+
+    <div id="scan-input-result" hidden>
+      <p id="scan-input-result-text">Your result is now displayed in the input field</p>
+      Input: <input id="code-result" readonly="true" />
+      <button id="scan-again-button" onclick="scanIntoInputShowScanner();">Scan Again</button>
+    </div>
+
+    <div id="barcode-picker" class="scanner"></div>
+
+    <div id="split-view-result" class="result-table" hidden>
+      <div id="split-view-result-entries" class="split-view-result-entries"></div>
+      <button id="clear-results-button" onclick="splitViewClearResults();" hidden>Clear Results</button>
+    </div>
+
+    <script>
+      const initialBaseURI = document.baseURI;
+      let scanditBarcodePicker;
+      let mode = 0;
+      let counter = 0;
+      let results = [];
+
+      const pageElements = {
+        sampleName: document.getElementById("sample-name"),
+        barcodePicker: document.getElementById("barcode-picker"),
+        home: {
+          container: document.getElementById("home-selection"),
+          description: document.getElementById("description"),
+          loader: document.getElementById("lib-loading"),
+          scanIntoInputButton: document.getElementById("scan-into-input-button"),
+          splitViewButton: document.getElementById("split-view-button"),
+        },
+        scanInput: {
+          form: document.getElementById("scan-input"),
+          codeInput: document.getElementById("code"),
+          result: {
+            container: document.getElementById("scan-input-result"),
+            resultInput: document.getElementById("code-result"),
+          },
+        },
+        splitView: {
+          result: document.getElementById("split-view-result"),
+          entries: document.getElementById("split-view-result-entries"),
+          clearButton: document.getElementById("clear-results-button"),
+        },
+      };
+
+      function resetApp() {
+        mode = 0;
+        counter = 0;
+        results = [];
+        pageElements.sampleName.innerHTML = "UI Sample";
+        pageElements.home.container.hidden = false;
+        pageElements.scanInput.form.hidden = true;
+        pageElements.scanInput.result.container.hidden = true;
+
+        pageElements.splitView.result.hidden = true;
+        pageElements.splitView.entries.innerHTML = "";
+
+        pageElements.barcodePicker.style.height = "auto";
+        if (scanditBarcodePicker) {
+          scanditBarcodePicker.setVideoFit("contain");
+          scanditBarcodePicker.pauseScanning();
+          scanditBarcodePicker.setVisible(false);
+        }
+      }
+
+      const key = "YOUR_LICENSE_KEY_IS_NEEDED_HERE";
+      const scannerReady = ScanditSDK.configure(key, {
+        engineLocation: "https://cdn.jsdelivr.net/npm/scandit-sdk@5.x/build",
+      })
+        .then(function () {
+          return ScanditSDK.BarcodePicker.create(document.getElementById("barcode-picker"), {
+            visible: false,
+            playSoundOnScan: true,
+            vibrateOnScan: true,
+            scanningPaused: true,
+          }).then(function (barcodePicker) {
+            scanditBarcodePicker = barcodePicker;
+            const scanSettings = new ScanditSDK.ScanSettings({
+              enabledSymbologies: ["ean8", "ean13", "upce", "code128", "code39", "itf", "qr", "data-matrix"],
+              codeDuplicateFilter: 1000,
+              searchArea: { x: 0, y: 0.333, width: 1, height: 0.333 },
+            });
+            barcodePicker.applyScanSettings(scanSettings);
+            barcodePicker.on("ready", function () {
+              pageElements.home.loader.hidden = true;
+              pageElements.home.description.hidden = false;
+              pageElements.home.scanIntoInputButton.hidden = false;
+              pageElements.home.splitViewButton.hidden = false;
+            });
+            barcodePicker.on("scan", function (scanResult) {
+              if (mode === 1) {
+                window.scrollTo(0, 0);
+                pageElements.scanInput.result.resultInput.value = scanResult.barcodes[0].data;
+                scanIntoInputResult();
+              } else if (mode === 2) {
+                counter = counter + 1;
+                const entry = document.createElement("div");
+                entry.className = "result-entry";
+                entry.textContent = scanResult.barcodes[0].symbology + ": " + scanResult.barcodes[0].data;
+                pageElements.splitView.entries.appendChild(entry);
+                pageElements.splitView.clearButton.hidden = false;
+              }
+            });
+            barcodePicker.on("scanError", function (error) {
+              alert(error);
+            });
+          });
+        })
+        .catch(function (error) {
+          alert(error);
+        });
+
+      function startScanIntoInput() {
+        mode = 1;
+        window.location.hash = "#mode=1";
+        pageElements.sampleName.innerHTML = "Scan into Input";
+        pageElements.home.container.hidden = true;
+        pageElements.scanInput.form.hidden = false;
+      }
+      function scanIntoInputShowScanner(e) {
+        e && e.preventDefault();
+        pageElements.scanInput.result.container.hidden = true;
+        pageElements.scanInput.form.hidden = true;
+        scanditBarcodePicker.resumeScanning();
+        scanditBarcodePicker.setVisible(true);
+      }
+      function scanIntoInputResult() {
+        pageElements.scanInput.result.container.hidden = false;
+        scanditBarcodePicker.pauseScanning();
+        scanditBarcodePicker.setVisible(false);
+      }
+      function startSplitView() {
+        mode = 2;
+        window.location.hash = "#mode=2";
+        pageElements.home.container.hidden = true;
+        pageElements.splitView.result.hidden = false;
+        scanditBarcodePicker.setVideoFit("cover");
+        pageElements.sampleName.innerHTML = "Split View";
+        pageElements.barcodePicker.style.height = "200px";
+        scanditBarcodePicker.resumeScanning();
+        scanditBarcodePicker.setVisible(true);
+      }
+      function splitViewClearResults() {
+        counter = 0;
+        results = [];
+        pageElements.splitView.result.hidden = false;
+        pageElements.splitView.clearButton.hidden = true;
+        pageElements.splitView.entries.innerHTML = "";
+      }
+
+      function activateRoute() {
+        if (window.location.hash === "") {
+          return resetApp();
+        }
+        switch (window.location.hash) {
+          case "#mode=1":
+            scannerReady.then(startScanIntoInput);
+            break;
+          case "#mode=2":
+            scannerReady.then(startSplitView);
+            break;
+        }
+      }
+
+      window.onpopstate = activateRoute;
+
+      activateRoute();
+    </script>
+  </body>
+</html>

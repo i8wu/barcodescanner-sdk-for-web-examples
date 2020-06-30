@@ -38,16 +38,16 @@
     <div id="barcode-picker" class="scanner"></div>
 
     <script>
-      var videoFit = ScanditSDK.BarcodePicker.ObjectFit.CONTAIN;
+      const videoFit = ScanditSDK.BarcodePicker.ObjectFit.CONTAIN;
 
       // Create the code location canvas element
-      var codeLocationCanvasElement = document.createElement("canvas");
+      const codeLocationCanvasElement = document.createElement("canvas");
       codeLocationCanvasElement.classList.add("code-location-canvas");
 
       // Set the code location canvas to fit in its parent element in the same way as the camera video inside the barcode picker
       codeLocationCanvasElement.style.objectFit = codeLocationCanvasElement.dataset.objectFit = videoFit; // Second value used by "objectFitPolyfill" library
 
-      var codeLocationCanvasContext = codeLocationCanvasElement.getContext("2d");
+      const codeLocationCanvasContext = codeLocationCanvasElement.getContext("2d");
 
       function drawCodeLocation(location) {
         codeLocationCanvasContext.beginPath();
@@ -77,7 +77,7 @@
             // Insert the code location canvas inside the scandit barcode picker element
             document.getElementsByClassName("scandit-barcode-picker")[0].appendChild(codeLocationCanvasElement);
 
-            var scanSettings = new ScanditSDK.ScanSettings({
+            const scanSettings = new ScanditSDK.ScanSettings({
               enabledSymbologies: ["ean8", "ean13", "upca", "upce", "code128", "code39", "code93", "itf"],
               codeDuplicateFilter: 1000,
             });

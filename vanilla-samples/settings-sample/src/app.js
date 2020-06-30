@@ -110,9 +110,9 @@ export class App {
         });
 
         Elements.guiStyle.all.forEach(guiStyleElement => {
-            const enabled = guiStyleElement.guiStyle() === ScanditSDK.BarcodePicker.GuiStyle[this.picker.guiStyle];
+            const enabled = guiStyleElement.guiStyle() === this.picker.gui.guiStyle;
             guiStyleElement.setChecked(enabled);
-        })
+        });
 
         Elements.restrictedArea.setArea(this.scanSettings.getSearchArea());
 

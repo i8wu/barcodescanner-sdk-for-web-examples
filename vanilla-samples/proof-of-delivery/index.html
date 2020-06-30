@@ -165,7 +165,7 @@
         signaturePad = new SignaturePad(signatureCanvas);
 
         function resizeCanvas() {
-          var ratio = Math.max(window.devicePixelRatio || 1, 1);
+          const ratio = Math.max(window.devicePixelRatio || 1, 1);
           signatureCanvas.width = signatureCanvas.offsetWidth * ratio;
           signatureCanvas.height = signatureCanvas.offsetHeight * ratio;
           signatureCanvas.getContext("2d").scale(ratio, ratio);

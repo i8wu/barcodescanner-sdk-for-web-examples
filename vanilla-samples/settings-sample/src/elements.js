@@ -18,7 +18,7 @@ export const Elements = {
 
     addSymbology: symbology => {
         const humanizedName = ScanditSDK.Barcode.Symbology.toHumanizedName(symbology);
-        var template = document.createElement('template');
+        const template = document.createElement('template');
         template.innerHTML = `<div class="symbology">
                                   <label class="toggle">
                                       <input type="checkbox" name="${humanizedName} Toggle"
@@ -45,7 +45,7 @@ export const Elements = {
         if (typeof guiStyle != 'string') {
             guiStyle = ScanditSDK.BarcodePicker.GuiStyle[guiStyle]; // we need the string representation of the GUI style
         }
-        var template = document.createElement('template');
+        const template = document.createElement('template');
         template.innerHTML = `<div class="gui-style segment-item">
                                   <input type="checkbox" name="${guiStyle} GUI Style Toggle"
                                       id="gui-style-${guiStyle}" onchange="guiStyleToggled('${guiStyle}')">
@@ -111,9 +111,9 @@ export const Elements = {
         Elements.guiStyle.values.forEach(guiStyle => Elements.addGuiStyle(guiStyle));
 
         Elements.guiStyles.active = () =>
-            Elements.guiStyle.all.filter(el => el.checked())[0] ? ScanditSDK.BarcodePicker.UIStyle[
+            Elements.guiStyle.all.filter(el => el.checked())[0] ? 
                 Elements.guiStyle.all.filter(el => el.checked())[0].guiStyle()
-            ] : undefined
+             : undefined
     },
 
     setupRestrictedArea: () => {

@@ -27,8 +27,7 @@ For accessing your local development server from a device other than your develo
 If the local development server is running, you can get a publicly available address to access it with the following
 commands that assume that the local server is accessible on port 8080:
 ```bash
-npm i ngrok -g
-ngrok http 8080 -host-header="localhost:8080"
+npx ngrok http 8080 -host-header="localhost:8080"
 ```
 
 _You'll be able to access the development server through both `http` and `https`, you should use `https` because of

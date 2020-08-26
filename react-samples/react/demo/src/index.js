@@ -12,7 +12,7 @@ class Demo extends Component {
         vibrateOnScan={true}
         scanSettings={
           new ScanSettings({
-            enabledSymbologies: ["qr", "ean8", "ean13", "upca", "upce", "code128", "code39", "code93", "itf"],
+            enabledSymbologies: ["qr", "code128", "data-matrix"],
             codeDuplicateFilter: 1000
           })
         }
@@ -27,6 +27,9 @@ class Demo extends Component {
         }}
         onError={error => {
           console.error(error.message);
+        }}
+        cameraSettings={{
+          resolutionPreference: "full-hd"
         }}
       />
     );
